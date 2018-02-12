@@ -1,0 +1,9 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <UnityWSASolutionName>Kophosight_FT</UnityWSASolutionName>
+        <UnityWSASolutionDir>D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\App\</UnityWSASolutionDir>
+        <UnityProjectDir>D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\</UnityProjectDir>
+        <UnityWSAPlayerDir>D:\Programs\Unity\Editor\Data\PlaybackEngines\MetroSupport\</UnityWSAPlayerDir>
+        <UnityWSAToolsDir>$(UnityWSASolutionDir)Unity\Tools\</UnityWSAToolsDir>
+    </PropertyGroup>
+</Project>

@@ -1,0 +1,4 @@
+D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\App\GeneratedProjects\UWP\Assembly-CSharp\Assembly-CSharp.csproj;x86
+D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+D:\Documents\HolocracyStudio\Workspace\Kophosight_FacialTracking\Kophosight_FT\App\Kophosight_FT\Kophosight_FT.csproj;x86

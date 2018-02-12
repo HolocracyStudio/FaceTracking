@@ -1,0 +1,117 @@
+﻿using System;
+using System.Diagnostics;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using UnityPlayer;
+using System.Threading.Tasks;
+
+namespace Kophosight_FT
+{
+    class App : IFrameworkView, IFrameworkViewSource
+    {
+        private WinRTBridge.WinRTBridge m_Bridge;
+        private AppCallbacks m_AppCallbacks;
+
+        public App()
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: App (constructor)");
+            SetupOrientation();
+            m_AppCallbacks = new AppCallbacks();
+
+            // Allow clients of this class to append their own callbacks.
+            AddAppCallbacks(m_AppCallbacks);
+           
+        }
+
+        public virtual void Initialize(CoreApplicationView applicationView)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: Initialize");
+            applicationView.Activated += ApplicationView_Activated;
+            CoreApplication.Suspending += CoreApplication_Suspending;
+
+            // Setup scripting bridge
+            m_Bridge = new WinRTBridge.WinRTBridge();
+            m_AppCallbacks.SetBridge(m_Bridge);
+
+            m_AppCallbacks.SetCoreApplicationViewEvents(applicationView);
+        }
+
+        /// <summary>
+        /// This is where apps can hook up any additional setup they need to do before Unity intializes.
+        /// </summary>
+        /// <param name="appCallbacks"></param>
+        virtual protected void AddAppCallbacks(AppCallbacks appCallbacks)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: AddAppCallbacks");
+        }
+
+        private void CoreApplication_Suspending(object sender, SuspendingEventArgs e)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: ApplicationView_Suspending");
+        }
+
+        private void ApplicationView_Activated(CoreApplicationView sender, IActivatedEventArgs args)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: ApplicationView_Activated");
+            CoreWindow.GetForCurrentThread().Activate();
+
+        }
+
+        public void SetWindow(CoreWindow coreWindow)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: SetWindow");
+            ApplicationView.GetForCurrentView().SuppressSystemOverlays = true;
+
+            m_AppCallbacks.SetCoreWindowEvents(coreWindow);
+            m_AppCallbacks.InitializeD3DWindow();
+        }
+
+        public void Load(string entryPoint)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: Load");
+        }
+
+        public void Run()
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: Run");
+            //FaceTrackerProcessor FT = new FaceTrackerProcessor();
+            //Task.Run(() => FT.InitFacialeRecon());
+
+            Task.Run(async delegate ()
+            {
+                //VideoProcessor videoProcessor = await VideoProcessor.CreateAsync();
+                FaceTrackerProcessor faceTrackerProcessor = await FaceTrackerProcessor.CreateAsync(await VideoProcessor.CreateAsync());               
+            });            
+            m_AppCallbacks.Run();
+            
+        }
+
+        public void Uninitialize()
+        {
+        }
+
+        [MTAThread]
+        static void Main(string[] args)
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: Main");
+            var app = new App();
+            CoreApplication.Run(app);
+        }
+
+        public IFrameworkView CreateView()
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: CreateView");
+            return this;
+        }
+
+        private void SetupOrientation()
+        {
+            Debug.WriteLine("\t\t\t\t\t APP.CS: SetupOrientation");
+            Unity.UnityGenerated.SetupDisplay();
+
+        }
+    }
+}
